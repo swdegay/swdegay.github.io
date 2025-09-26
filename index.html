@@ -29,33 +29,11 @@
 
       a {
         color: var(--link-color);
-        text-decoration: none;
         transition: 300ms;
       }
 
       a:hover {
         color: var(--link-hover-color);
-      }
-
-      a:not(nav a, footer a) {
-        position: relative;
-        padding-right: 0.2em;
-        display: inline-block;
-      }
-
-      a:not(nav a, footer a)::after {
-        content: '›';
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        opacity: 0;
-        transition: opacity 300ms ease, right 300ms ease;
-      }
-
-      a:not(nav a, footer a, .project a):hover::after {
-        opacity: 1;
-        right: -0.8em;
       }
 
       footer {
@@ -166,7 +144,7 @@
           <ul class="project list">
             <li>
               <p>
-                <strong><a href="https://github.com/swdegay/hict7-android">Hict7:</a></strong>A workout interval timer for Android designed to help users track their workouts and monitor their consistency.
+                <a href="https://github.com/swdegay/hict7-android">Hict7:</a> A workout interval timer for Android designed to help users track their workouts and monitor their consistency.
               </p>
             </li>
             <li class="tag-container">
