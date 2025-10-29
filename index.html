@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Seth Degay</title>
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAALKSURBVDjLXZO9b5tlFMV/z/O8fv3xfjiv7TjEqWOIpUQVlYChlaBBRKpYUMXnkCKWqjNMiIGBlUxsEX9DK3VnqISSiYGlFCEikJFiWVaMHLexHZs47/NcBpJiuPM9R+fcc67if9NoNN4CtrXWW8VisTkYDABawF4mk3nQarX25/fVHLAGfAl8CqC1JuP7OOewzmFtSrlU4uTZyW6apjvtdrv7nOAC/A1wByCbzfLKa6+yfvUqS7Vlzs5mtA/bfP/oEcOnT0HkfhAEnx8cHHQNwMLCwtfAvUs1zlmOBwOOej3eefc9ao2XWFtf50q9zs9PHhMF4bV8vpDtdrvfmQvP3857CvOwEfmIM1y7/jp+EKGMTxhF/PHb70zGI6rV6o1KZWnPA7afg5XC04a3N9ZYyVmyxSKaGdO/TjF+nnOBUlLh1yeP6ff7KKW3NbA1T+D7hmR5EVGWYhTjZQARTscjRAl+LotWCs9olGLLA5qXBCKCUYpyXKCSK5Grv8hUGdLphCCIEA3WnqO1IUnK5PJ+U89nKiJYEU4mDpmeMYliZmcOD0WQz5PDMBmfkgrMnIcT0EqploggIhc+DH68ANpDZXIgHkEQUU5K9Ht/0jvqAYrhsx5H3aOWCcPwZefc9fkIa7UapbUNSKoU4hKrq6uMRyP8XI7yYoVOp8N4OAFRD00cx2Pg7uURQaHzBdbf2KS8vEJlaZHzc4uXyVOIQsJSQr3ZZHgyZDKZfKE7nc4+sPtvuRX942PQmkIckuL+8Wwt4+kUlKZ+pcFHH3+y+8tPP+57F73fEZGKMeaO1prllRpRMebcpsxEUCIoSRGbIk6hlbkfxvEOgAEYDoejJEl+8H0/WwiCG7c/fJ/khUWU1oiAchqcQltBWdnFua8+uLXZBfAulR8eHnaBz26+ufmwurqyPbN2y3O2qRwIpqWt7Im1D27fuvmfd/4bN40UUmGzlI8AAAAASUVORK5CYII=">
+    <style>
+      :root {
+        --background-color: #fdfdfd;
+        --text-color: #212121;
+        --link-color: #212121;
+        --link-hover-color: #999;
+      }
+
+      :has(#theme-toggle:checked) {
+        --background-color: #212121;
+        --text-color: #fdfdfd;
+        --link-color: #fdfdfd;
+      }
+
+      body {
+        font-family: monospace;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-size: large;
+        background-color: var(--background-color);
+        color: var(--text-color);
+      }
+
+      a { color: var(--link-color); }
+
+      a:hover { color: var(--link-hover-color); }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 3rem;
+      }
+
+      label[for='theme-toggle']:hover {
+        cursor: pointer;
+        color: var(--link-hover-color);
+      }
+
+      .list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .list-item {
+        display: grid;
+        grid-template-columns: 68px auto;
+        column-gap: 10px;
+      }
+
+      .list-item:not(:last-child) { margin-bottom: 0.25rem; }
+
+      /* .project:not(:last-child) {
+        margin-bottom: 1.5rem;
+      }
+
+      section ul.project li:not(:last-child) {
+        margin-bottom: 0.25rem;
+      } */
+
+      .tag {
+        color: var(--text-color);
+        font-size: 0.7rem;
+        white-space: nowrap;
+        text-align: center;
+      }
+
+      .tag-container .tag:not(:last-child)::after { content: ' ∙ '; }
+
+      .content {
+        width: 80%;
+        margin: 0 auto;
+        padding: 0.7em;
+        line-height: 1.4;
+      }
+
+      @media (min-width: 768px) { .content { width: 66ch; } }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <header>
+        <h2>Seth Degay</h2>
+        <div>
+          <input type="checkbox" id="theme-toggle" hidden aria-label="Toggle light and dark theme">
+          <label for="theme-toggle">☀ Switch theme</label>
+        </div>
+      </header>
+      <main>
+        <section id="about">
+          <p>Hello! I'm Seth, and I'm currently looking for a software engineering role focusing on Android development.</p>
+          <p>I'm currently based in Baguio City, Philippines.</p>
+          <p>Please feel free to review my resume and reach out—I'm open to discussing new opportunities.</p>
+          <ul class="list">
+            <li class="list-item">
+              Email:<span><a href="mailto:contact&#x40;sethdegay&#x2e;dev">contact&#x40;sethdegay&#x2e;dev</a></span>
+            </li>
+            <li class="list-item">
+              Resume:<span><a href="https://drive.google.com/file/d/1yBfbiN6wJCSAgmqUXhZyUOWixUMXyt0n/view">Google Drive</a></span>
+            </li>
+            <li class="list-item">
+              Github:<span><a href="https://github.com/swdegay">swdegay</a></span>
+            </li>
+          </ul>
+        </section>
+        <section id="projects">
+          <h2>Projects</h2>
+          <ul class="project list">
+            <li><a href="https://github.com/swdegay/hict7-android">Hict7</a>: A workout interval timer for Android designed to help users track their workouts and monitor their consistency.</li>
+            <li class="tag-container">
+              <span class="tag">Kotlin</span>
+              <span class="tag">Coroutines</span>
+              <span class="tag">Compose</span>
+              <span class="tag">Navigation3</span>
+              <span class="tag">Material3</span>
+              <span class="tag">ViewModel</span>
+              <span class="tag">Room</span>
+              <span class="tag">Hilt</span>
+              <span class="tag">DataStore</span>
+              <span class="tag">Multi-module</span>
+            </li>
+          </ul>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
