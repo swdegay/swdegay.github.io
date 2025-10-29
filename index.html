@@ -24,7 +24,7 @@
         font-optical-sizing: auto;
         font-weight: 400;
         font-style: normal;
-        font-size: large;
+        font-size: medium;
         background-color: var(--background-color);
         color: var(--text-color);
       }
@@ -82,7 +82,10 @@
         line-height: 1.4;
       }
 
-      @media (min-width: 768px) { .content { width: 66ch; } }
+      @media (min-width: 768px) {
+        body { font-size: large; }
+        .content { width: 66ch; }
+      }
     </style>
   </head>
   <body>
