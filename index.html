@@ -4,19 +4,54 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Seth Degay</title>
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAALKSURBVDjLXZO9b5tlFMV/z/O8fv3xfjiv7TjEqWOIpUQVlYChlaBBRKpYUMXnkCKWqjNMiIGBlUxsEX9DK3VnqISSiYGlFCEikJFiWVaMHLexHZs47/NcBpJiuPM9R+fcc67if9NoNN4CtrXWW8VisTkYDABawF4mk3nQarX25/fVHLAGfAl8CqC1JuP7OOewzmFtSrlU4uTZyW6apjvtdrv7nOAC/A1wByCbzfLKa6+yfvUqS7Vlzs5mtA/bfP/oEcOnT0HkfhAEnx8cHHQNwMLCwtfAvUs1zlmOBwOOej3eefc9ao2XWFtf50q9zs9PHhMF4bV8vpDtdrvfmQvP3857CvOwEfmIM1y7/jp+EKGMTxhF/PHb70zGI6rV6o1KZWnPA7afg5XC04a3N9ZYyVmyxSKaGdO/TjF+nnOBUlLh1yeP6ff7KKW3NbA1T+D7hmR5EVGWYhTjZQARTscjRAl+LotWCs9olGLLA5qXBCKCUYpyXKCSK5Grv8hUGdLphCCIEA3WnqO1IUnK5PJ+U89nKiJYEU4mDpmeMYliZmcOD0WQz5PDMBmfkgrMnIcT0EqploggIhc+DH68ANpDZXIgHkEQUU5K9Ht/0jvqAYrhsx5H3aOWCcPwZefc9fkIa7UapbUNSKoU4hKrq6uMRyP8XI7yYoVOp8N4OAFRD00cx2Pg7uURQaHzBdbf2KS8vEJlaZHzc4uXyVOIQsJSQr3ZZHgyZDKZfKE7nc4+sPtvuRX942PQmkIckuL+8Wwt4+kUlKZ+pcFHH3+y+8tPP+57F73fEZGKMeaO1prllRpRMebcpsxEUCIoSRGbIk6hlbkfxvEOgAEYDoejJEl+8H0/WwiCG7c/fJ/khUWU1oiAchqcQltBWdnFua8+uLXZBfAulR8eHnaBz26+ufmwurqyPbN2y3O2qRwIpqWt7Im1D27fuvmfd/4bN40UUmGzlI8AAAAASUVORK5CYII=">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>
+      /* color palette */
       :root {
-        --background-color: #fdfdfd;
-        --text-color: #212121;
-        --link-color: #212121;
+        --background-light: #fdfdfd;
+        --background-dark: #212121;
+
+        --text-light: var(--background-dark);
+        --text-dark: var(--background-light);
+
+        --link-light: var(--background-dark);
+        --link-dark: var(--background-light);
         --link-hover-color: #999;
+
+        --theme-toggle-label-light: "Use dark theme";
+        --theme-toggle-label-dark: "Use light theme";
       }
 
+      /* light theme */
+      :root {
+        --background-color: var(--background-light);
+        --text-color: var(--text-light);
+        --link-color: var(--link-light);
+        --theme-toggle-label: var(--theme-toggle-label-light);
+      }
+
+      /* dark theme */
       :has(#theme-toggle:checked) {
-        --background-color: #212121;
-        --text-color: #fdfdfd;
-        --link-color: #fdfdfd;
+        --background-color: var(--background-dark);
+        --text-color: var(--text-dark);
+        --link-color: var(--link-dark);
+        --theme-toggle-label: var(--theme-toggle-label-dark);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background-color: var(--background-dark);
+          --text-color: var(--text-dark);
+          --link-color: var(--link-dark);
+          --theme-toggle-label: var(--theme-toggle-label-dark);
+        }
+
+        :has(#theme-toggle:checked) {
+          --background-color: var(--background-light);
+          --text-color: var(--text-light);
+          --link-color: var(--link-light);
+          --theme-toggle-label: var(--theme-toggle-label-light);
+        }
       }
 
       body {
@@ -27,25 +62,61 @@
         font-size: medium;
         background-color: var(--background-color);
         color: var(--text-color);
+        transition: background-color 300ms ease;
+
+        margin: 0;
+
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        justify-content: space-between;
       }
 
       a { color: var(--link-color); }
-
       a:hover { color: var(--link-hover-color); }
 
       header {
         display: flex;
+        justify-content: space-between;
         align-items: center;
+        margin-bottom: 1.5rem;
       }
+      header a { text-decoration: none; }
+      header h2 { margin: 0; }
 
-      label[for='theme-toggle'] {
-        font-size: small;
-      }
-
+      /*label[for='theme-toggle'] { font-size: small; }*/
       label[for='theme-toggle']:hover {
         cursor: pointer;
         color: var(--link-hover-color);
       }
+      .theme-toggle-label::after {
+        content: var(--theme-toggle-label);
+      }
+
+      .list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+      .list-item { display: inline; }
+      .list-item:not(:last-child)::after { content: '////'; }
+
+      .project:not(:last-child) {
+        margin-bottom: 1.5rem;
+      }
+
+      /*section ul.project li:not(:last-child) {
+        margin-bottom: 0.25rem;
+      }*/
+
+      .tag {
+        color: var(--text-color);
+        font-size: small;
+        white-space: nowrap;
+        text-align: center;
+      }
+
+      .tag-container .tag:not(:last-child)::after { content: ' ∙ '; }
 
       .content {
         width: 80%;
@@ -54,30 +125,124 @@
         line-height: 1.4;
       }
 
+      .name {
+        background-color: var(--link-color);
+        color: var(--background-color);
+        padding: 0.15em;
+        transition: background-color 300ms ease;
+      }
+
+      .name:hover { background-color: var(--link-hover-color); }
+
+      .no-select {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .footer-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .footer-background {
+        font-size: 15vw;
+        font-weight: 900;
+        white-space: nowrap;
+        opacity: 0.08;
+        line-height: 0.8;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .footer-foreground {
+        margin-top: -4vw;
+        z-index: 2;
+        text-align: center;
+        width: 100%;
+        position: relative;
+      }
+
+      .footer-bottom {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        padding: 0.25rem 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--link-hover-color);
+        transition: background-color 300ms ease;
+      }
+
       @media (min-width: 768px) {
         body { font-size: large; }
         .content { width: 66ch; }
+        .footer-bottom { flex-direction: row; }
       }
     </style>
   </head>
   <body>
     <div class="content">
       <header>
-        <h2>Seth Degay</h2>
+        <a href="/"><h2 class="name no-select">seth_degay;</h2></a>
       </header>
       <main>
         <section id="about">
-          <p>Currently updating the site.</p>
-          <p>Email: <span><a href="mailto:mail&#x40;sethdegay&#x2e;dev">mail&#x40;sethdegay&#x2e;dev</a></span>.</p>
+          <p>Software developer based in the Philippines.</p>
+          <ul class="list">
+            <li class="list-item">
+              <span><a href="mailto:mail&#x40;sethdegay&#x2e;dev">mail&#x40;sethdegay&#x2e;dev</a></span>
+            </li>
+            <!-- <li class="list-item">
+              <span><a href="https://github.com/swdegay">Github</a></span>
+            </li>
+            <li class="list-item">
+              <span><a href="">LinkedIn</a></span>
+            </li>
+            <li class="list-item">
+              <span><a href="">Resume</a></span> -->
+            </li>
+          </ul>
+        </section>
+        <section id="projects">
+          <h2>Projects</h2>
+          <ul class="project list">
+            <li>
+             <a href="https://github.com/swdegay/Sequence">Sequence</a>: A sequential timer for structured task execution.
+              <div class="tag-container">
+                <span class="tag">Android</span>
+                <span class="tag">Kotlin</span>
+                <span class="tag">Jetpack</span>
+                <span class="tag">Multi-module</span>
+              </div>
+            </li>
+          </ul>
         </section>
       </main>
       <br>
-      <footer>
-        <div>
-          <input type="checkbox" id="theme-toggle" hidden aria-label="Toggle light and dark theme">
-          <label for="theme-toggle">☀ Switch theme</label>
-        </div>
-      </footer>
     </div>
+    <footer>
+      <div class="footer-wrapper">
+        <div class="footer-background no-select" aria-hidden="true">05e02c2b55a73c61c89affb91b919594</div>
+        <div class="footer-foreground">
+          <div class="footer-bottom">
+            <div>
+              <p>(C) 2026 Seth Degay</p>
+            </div>
+            <div>
+              <input type="checkbox" id="theme-toggle" hidden aria-label="Toggle light and dark theme">
+              <label for="theme-toggle" class="theme-toggle-label"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
