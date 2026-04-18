@@ -1,8 +1,8 @@
 #!/bin/bash
 
 REPORT_FILE="dist/opt-report.txt"
-SRC_HTML="dist/index.source.html"
-FINAL_HTML="dist/index.html"
+SRC_HTML="dist/index.html"
+FINAL_HTML="dist/index.min.html"
 COMMIT_HASH=${1:0:7}
 
 get_size() {

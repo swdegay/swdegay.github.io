@@ -9,8 +9,8 @@ const PATHS = {
   index: './src/index.eta',
   theme_css: './src/theme.css',
   main_css: './src/main.css',
-  dist_final_index: './dist/index.html',
-  dist_source_index: './dist/index.source.html',
+  dist_final_index: './dist/index.min.html',
+  dist_source_index: './dist/index.html',
   dist: './dist',
   userdata: './data/userdata.json',
 };

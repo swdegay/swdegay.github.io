@@ -27,7 +27,7 @@ jobs:
           deno task build ${{ github.sha }}
           chmod +x ./generate-report.sh
           ./generate-report.sh ${{ github.sha }}
-          rm -f dist/index.source.html
+          mv -f dist/index.min.html dist/index.html
           cp CNAME .nojekyll dist/
 
       - name: Upload static files
