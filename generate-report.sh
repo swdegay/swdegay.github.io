@@ -24,34 +24,34 @@ else
 fi
 
 {
-  echo "┌────────────────────────────────────┐"
-  echo "│  FILE OPTIMIZATION REPORT          │"
-  echo "├────────────────────────────────────┤"
+  echo "+------------------------------------+"
+  echo "|  FILE OPTIMIZATION REPORT          |"
+  echo "+------------------------------------+"
 
-  printf "│  Date   : %-24s │\n" "$(date '+%Y-%m-%d %H:%M:%S %Z')"
-  printf "│  Commit : %-24s │\n" "${COMMIT_HASH:-n/a}"
+  printf "|  Date   : %-24s |\n" "$(date '+%Y-%m-%d %H:%M:%S %Z')"
+  printf "|  Commit : %-24s |\n" "${COMMIT_HASH:-n/a}"
 
-  echo "├────────────────────────────────────┤"
-  echo "│  BUILD SUMMARY                     │"
+  echo "+------------------------------------+"
+  echo "|  BUILD SUMMARY                     |"
 
-  printf "│  • Unoptimized : %-17s │\n" "$SIZE_SRC_HTML bytes"
-  printf "│  • Optimized   : %-17s │\n" "$SIZE_FINAL_HTML bytes"
+  printf "|  * Unoptimized : %-17s |\n" "$SIZE_SRC_HTML bytes"
+  printf "|  * Optimized   : %-17s |\n" "$SIZE_FINAL_HTML bytes"
 
-  echo "│                                    │"
-  echo "│  RESULTS                           │"
+  echo "|                                    |"
+  echo "|  RESULTS                           |"
 
   if [ "$SIZE_FINAL_HTML" -lt "$SIZE_SRC_HTML" ]; then
-    printf "│  • Status : %-22s │\n" "SUCCESS"
-    printf "│  • Saved  : %-22s │\n" "$DIFF bytes"
-    printf "│  • Change : %-22s │\n" "-${PERCENT}%"
+    printf "|  * Status : %-22s |\n" "SUCCESS"
+    printf "|  * Saved  : %-22s |\n" "$DIFF bytes"
+    printf "|  * Change : %-22s |\n" "-${PERCENT}%"
   elif [ "$SIZE_FINAL_HTML" -eq "$SIZE_SRC_HTML" ]; then
-    printf "│  • Status : %-22s │\n" "NO CHANGE"
+    printf "|  * Status : %-22s |\n" "NO CHANGE"
   else
-    printf "│  • Status : %-22s │\n" "FAILURE"
-    printf "│  • Change : %-22s │\n" "+${PERCENT#-}%"
+    printf "|  * Status : %-22s |\n" "FAILURE"
+    printf "|  * Change : %-22s |\n" "+${PERCENT#-}%"
   fi
 
-  echo "└────────────────────────────────────┘"
+  echo "+------------------------------------+"
 } > "$REPORT_FILE"
 
 echo "Report generated: $REPORT_FILE"
