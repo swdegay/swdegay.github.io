@@ -106,7 +106,7 @@ label[for='theme-toggle']:hover {
 }
 
 .footer-background {
-  font-size: 15vw;
+  font-size: clamp(4.5rem, 10vw + 1rem, 13rem);
   font-weight: 900;
   white-space: nowrap;
   opacity: 0.08;
@@ -116,7 +116,6 @@ label[for='theme-toggle']:hover {
 }
 
 .footer-foreground {
-  margin-top: -4vw;
   z-index: 2;
   text-align: center;
   width: 100%;
@@ -133,7 +132,6 @@ label[for='theme-toggle']:hover {
   gap: 0.5rem;
   align-items: center;
   text-align: center;
-  border-top: 1px solid var(--link-hover-color);
   transition: background-color 300ms ease;
 }
 
