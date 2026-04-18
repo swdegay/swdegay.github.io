@@ -1,0 +1,47 @@
+/* color palette */
+:root {
+  --background-light: #fdfdfd;
+  --background-dark: #212121;
+
+  --text-light: var(--background-dark);
+  --text-dark: var(--background-light);
+
+  --link-light: var(--background-dark);
+  --link-dark: var(--background-light);
+  --link-hover-color: #999;
+
+  --theme-toggle-label-light: "Theme: 🌙";
+  --theme-toggle-label-dark: "Theme: ☀️";
+}
+
+/* light theme */
+:root {
+  --background-color: var(--background-light);
+  --text-color: var(--text-light);
+  --link-color: var(--link-light);
+  --theme-toggle-label: var(--theme-toggle-label-light);
+}
+
+/* dark theme */
+:has(#theme-toggle:checked) {
+  --background-color: var(--background-dark);
+  --text-color: var(--text-dark);
+  --link-color: var(--link-dark);
+  --theme-toggle-label: var(--theme-toggle-label-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--background-dark);
+    --text-color: var(--text-dark);
+    --link-color: var(--link-dark);
+    --theme-toggle-label: var(--theme-toggle-label-dark);
+  }
+
+  :has(#theme-toggle:checked) {
+    --background-color: var(--background-light);
+    --text-color: var(--text-light);
+    --link-color: var(--link-light);
+    --theme-toggle-label: var(--theme-toggle-label-light);
+  }
+}

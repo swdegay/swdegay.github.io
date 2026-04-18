@@ -1,0 +1,52 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: latest
+          cache: false
+
+      - name: Setup project
+        run: deno install
+
+      - name: Build index.html and Generate Report
+        run: |
+          deno task build ${{ github.sha }}
+          chmod +x ./generate-report.sh
+          ./generate-report.sh ${{ github.sha }}
+          rm -f dist/index.source.html
+          cp CNAME .nojekyll dist/
+
+      - name: Upload static files
+        id: deployment
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist/
+          include-hidden-files: true
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-slim
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ data.name }}</title>
+    <link rel="icon" href="{{ data.favicon }}">
+    <style>
+      {{~ Deno.readTextFileSync(`${Deno.cwd()}/src/theme.css`); }}
+      {{~ Deno.readTextFileSync(`${Deno.cwd()}/src/main.css`); }}
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <header>
+        <a href="/"><h2 class="name no-select">{{ data.stylized }}</h2></a>
+      </header>
+      <main>
+        <section id="about">
+          <p>{{ data.bio }}</p>
+          <ul class="list">
+            {{$ data.links.forEach(function(link){ }}
+            <li class="list-item">
+              <span><a href="{{ link.url }}">{{ link.label }}</a></span>
+            </li>
+            {{$ }) }}
+          </ul>
+        </section>
+        <section id="projects">
+          <h2>Projects</h2>
+          <ul class="project list">
+            {{$ data.projects.forEach(function(project) { }}
+            <li>
+             <a href="{{ project.url }}">{{ project.title }}</a>: {{ project.description }}
+              <div class="tag-container">
+                {{$ project.tags.forEach(function(tag) { }}
+                <span class="tag">{{ tag.name }}</span>
+                {{$ }) }}
+              </div>
+            </li>
+            {{$ }) }}
+          </ul>
+        </section>
+      </main>
+      <br>
+    </div>
+    <footer>
+      <div class="footer-wrapper">
+        <div class="footer-background no-select" aria-hidden="true">{{ data.commit_hash }}</div>
+        <div class="footer-foreground">
+          <div class="footer-bottom">
+            <div>
+              <p>(C) 2026 {{ data.name }}</p>
+            </div>
+            <div>
+              <input type="checkbox" id="theme-toggle" hidden aria-label="Switch theme">
+              <label for="theme-toggle" class="theme-toggle-label"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

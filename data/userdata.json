@@ -1,0 +1,22 @@
+{
+  "name": "Seth Degay",
+  "stylized": "seth_degay;",
+  "bio": "Software developer based in the Philippines.",
+  "links": [
+    { "label": "mail@sethdegay.dev", "url": "mailto:mail@sethdegay.dev" },
+    { "label": "GitHub", "url": "https://github.com/swdegay" }
+  ],
+  "projects": [
+    {
+      "title": "Sequence",
+      "url": "https://github.com/swdegay/Sequence",
+      "description": "A sequential timer for structured task execution.",
+      "tags": [
+        { "name": "Android" },
+        { "name": "Kotlin" },
+        { "name": "Jetpack" },
+        { "name": "Multi-module" }
+      ]
+    }
+  ]
+}
