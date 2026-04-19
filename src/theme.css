@@ -10,8 +10,8 @@
   --link-dark: var(--background-light);
   --link-hover-color: #999;
 
-  --theme-toggle-label-light: "Theme: 🌙";
-  --theme-toggle-label-dark: "Theme: ☀️";
+  --theme-toggle-label-light: "Theme //// 🌙";
+  --theme-toggle-label-dark: "Theme //// ☀️";
 }
 
 /* light theme */
