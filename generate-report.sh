@@ -52,6 +52,9 @@ fi
   fi
 
   echo "+------------------------------------+"
+  echo ""
+  echo "* Server-side compression (gzip/brotli)"
+  echo "may further reduce delivered payload."
 } > "$REPORT_FILE"
 
 echo "Report generated: $REPORT_FILE"

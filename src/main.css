@@ -33,7 +33,6 @@ header {
 header a { text-decoration: none; }
 header h2 { margin: 0; }
 
-/*label[for='theme-toggle'] { font-size: small; }*/
 label[for='theme-toggle']:hover {
   cursor: pointer;
   color: var(--link-hover-color);
@@ -131,6 +130,7 @@ label[for='theme-toggle']:hover {
   align-items: center;
   text-align: center;
   transition: background-color 300ms ease;
+  font-size: small;
 }
 
 .footer-bottom p {

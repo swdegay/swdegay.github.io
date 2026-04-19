@@ -49,7 +49,7 @@
         <div class="footer-background no-select" aria-hidden="true">{{ data.commit_hash }}</div>
         <div class="footer-foreground">
           <div class="footer-bottom">
-            <p>(C) 2026 {{ data.name }}</p>
+            <p>Status: <a href="opt-report.txt" target="_blank">opt-report.txt</a></p>
             <div>
               <input type="checkbox" id="theme-toggle" hidden aria-label="Switch theme">
               <label for="theme-toggle" class="theme-toggle-label"></label>
