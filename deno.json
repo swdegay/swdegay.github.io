@@ -4,7 +4,7 @@
     "test": "deno test tests/",
     "check": "deno fmt && deno lint && deno test",
     "clean": "rm -rf dist/",
-    "dev": "COMMIT_HASH=$(git rev-parse HEAD) deno --watch=src/ -P=build-permissions build.ts & deno -P=dev-permissions serve-dev.ts"
+    "dev": "COMMIT_HASH=$(git rev-parse HEAD) deno --watch=src/,data/ -P=build-permissions build.ts & deno -P=dev-permissions serve-dev.ts"
   },
   "lint": {
     "rules": {
