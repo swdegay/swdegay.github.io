@@ -4,7 +4,7 @@
     "build-dev": "deno task clean && COMMIT_HASH='610dac2fabc687ae9ea6bb65e6cd89e55350c992' GITHUB_ACTIONS='true' deno task build && sha256sum dist/index.min.html",
     "check": "deno fmt && deno lint && deno task test",
     "clean": "rm -rf dist/",
-    "dev": "COMMIT_HASH=$(git rev-parse origin/dev) deno --watch=src/,data/ -P=build-permissions scripts/build.ts & deno -P=dev-permissions serve-dev.ts",
+    "dev": "COMMIT_HASH=$(git rev-parse origin/main) deno --watch=src/,data/ -P=build-permissions scripts/build.ts & deno -P=dev-permissions serve-dev.ts",
     "ship": "git rev-parse --verify --quiet \"$COMMIT_HASH^{commit}\" && deno task build",
     "test": "deno test -P=test-permissions tests/"
   },
