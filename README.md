@@ -7,6 +7,9 @@ single, self-contained HTML file deployed automatically via GitHub Actions.
 I built this project to explore TypeScript, CI/CD, and the mechanics of building
 a basic build tool within the modern JavaScript ecosystem.
 
+[Live site](https://sethdegay.dev/) |
+[Optimization report](https://sethdegay.dev/optimization-report.txt)
+
 ## Benchmark Target
 
 The project aims for a 14KB budget, inspired by the idea that keeping a page
