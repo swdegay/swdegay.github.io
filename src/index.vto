@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ url }}">
+
+    {{ if favicon }}
+    <link rel="icon" href="{{ favicon }}">
+    {{ /if }}
+    <style>
+      {{ include "css/fadein.css" }}
+      {{ include "css/flexbox.css" }}
+      {{ include "css/theme.css" }}
+      {{ include "css/main.css" }}
+    </style>
+  </head>
+  <body class="flex flex-col justify-between">
+    <div class="content">
+      <main>
+        {{ include "templates/about.vto" }}
+      </main>
+    </div>
+    {{ include "templates/theme-toggle.vto" }}
+    <script>
+      {{ include "js/timestamp-formatter.js" }}
+    </script>
+  </body>
+</html>

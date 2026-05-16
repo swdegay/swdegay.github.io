@@ -1,0 +1,63 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 1
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282
+        with:
+          deno-version: latest
+          cache: false
+
+      - name: Setup project
+        run: deno install
+
+      - name: Run tests
+        run: deno task test
+
+      - name: Load user data
+        env:
+          RAW_DATA: ${{ secrets.USER_DATA }}
+        run: |
+          rm -f data/userdata.json
+          printf "%s" "$RAW_DATA" | base64 -d > data/userdata.json
+
+      - name: Build index.html and generate report
+        env:
+          COMMIT_HASH: ${{ github.sha }}
+        run: |
+          deno task ship
+          bash generate-report.sh "$COMMIT_HASH"
+          mv -f dist/index.min.html dist/index.html
+          cp CNAME .nojekyll dist/
+
+      - name: Upload static files
+        id: deployment
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
+        with:
+          path: dist/
+          include-hidden-files: true
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-slim
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128

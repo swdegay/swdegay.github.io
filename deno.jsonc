@@ -1,0 +1,63 @@
+{
+  "tasks": {
+    "build": "deno -P=build-permissions scripts/build.ts",
+    "build-dev": "deno task clean && COMMIT_HASH='610dac2fabc687ae9ea6bb65e6cd89e55350c992' GITHUB_ACTIONS='true' deno task build && sha256sum dist/index.min.html",
+    "check": "deno fmt && deno lint && deno task test",
+    "clean": "rm -rf dist/",
+    "dev": "COMMIT_HASH=$(git rev-parse origin/dev) deno --watch=src/,data/ -P=build-permissions scripts/build.ts & deno -P=dev-permissions serve-dev.ts",
+    "ship": "git rev-parse --verify --quiet \"$COMMIT_HASH^{commit}\" && deno task build",
+    "test": "deno test -P=test-permissions tests/"
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
+  },
+  "fmt": {
+    "indentWidth": 2,
+    "singleQuote": true,
+    "semiColons": true
+  },
+  "imports": {
+    "@/": "./",
+    "@minify-html/deno": "jsr:@minify-html/deno@^0.18.1",
+    "@std/assert": "jsr:@std/assert@^1.0.19",
+    "@std/fmt": "jsr:@std/fmt@^1.0.10",
+    "@std/http": "jsr:@std/http@^1.1.0",
+    "@std/path": "jsr:@std/path@^1.1.4",
+    "@std/random": "jsr:@std/random@^0.1.5",
+    "svgo": "npm:svgo@^4.0.1",
+    "vento": "https://cdn.jsdelivr.net/gh/ventojs/vento@2.2.0/mod.ts"
+  },
+  "permissions": {
+    "build-permissions": {
+      "env": [
+        "COMMIT_HASH",
+        "GITHUB_ACTIONS"
+      ],
+      "read": {
+        "allow": ["./data", "./dist", "./src"]
+      },
+      "write": {
+        "allow": ["./dist"]
+      },
+      "net": [
+        "jsr.io:443" // https://jsr.io/@minify-html/deno/0.18.1/index.js#L149
+      ]
+    },
+    "dev-permissions": {
+      "net": true,
+      "read": {
+        "allow": ["./dist"]
+      }
+    },
+    "test-permissions": {
+      "read": {
+        "allow": ["./data", "./src"]
+      },
+      "net": [
+        "jsr.io:443" // https://jsr.io/@minify-html/deno/0.18.1/index.js#L149
+      ]
+    }
+  }
+}

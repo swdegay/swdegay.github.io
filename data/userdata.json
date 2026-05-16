@@ -1,0 +1,16 @@
+{
+  "title": "Dev Portfolio",
+  "description": "A webpage built using a custom Deno-based pipeline.",
+  "url": "https://example.com",
+  "name": "Full Name",
+  "bio": [
+    "This text serves as a <span class=\"highlight\">placeholder</span> for a <span class=\"highlight\">bio</span>.",
+    "Highlighted or hyperlink elements provide a visual contrast to plain text entries.",
+    "Embedded <strong>HTML</strong> elements are supported, including <a href=\"https://example.com\">direct hyperlinks</a> to external resources.",
+    "Additional content may be appended to this array as needed."
+  ],
+  "links": [
+    { "label": "Email", "url": "mailto:info@example.com" },
+    { "label": "Example.com", "url": "https://example.com" }
+  ]
+}

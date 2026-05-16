@@ -1,0 +1,93 @@
+/* Color palette */
+:root {
+  --background-light: #fdfdfd;
+  --background-dark: #212121;
+
+  --text-light: var(--background-dark);
+  --text-dark: var(--background-light);
+
+  --link-light: var(--background-dark);
+  --link-dark: var(--background-light);
+  --link-hover-color: #999;
+
+  --theme-toggle-label-light: '🌙';
+  --theme-toggle-label-dark: '☀️';
+}
+
+/* Light theme */
+:root {
+  --background-color: var(--background-light);
+  --text-color: var(--text-light);
+  --link-color: var(--link-light);
+  --theme-toggle-label: var(--theme-toggle-label-light);
+}
+
+/* Dark theme */
+:has(#theme-toggle:checked) {
+  --background-color: var(--background-dark);
+  --text-color: var(--text-dark);
+  --link-color: var(--link-dark);
+  --theme-toggle-label: var(--theme-toggle-label-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--background-dark);
+    --text-color: var(--text-dark);
+    --link-color: var(--link-dark);
+    --theme-toggle-label: var(--theme-toggle-label-dark);
+  }
+
+  :has(#theme-toggle:checked) {
+    --background-color: var(--background-light);
+    --text-color: var(--text-light);
+    --link-color: var(--link-light);
+    --theme-toggle-label: var(--theme-toggle-label-light);
+  }
+}
+
+/* Decorators */
+.flex-row-item:not(:last-child)::after {
+  content: '∙';
+  color: var(--link-hover-color);
+  margin-left: 0.5em;
+}
+.bracket-wrap::before {
+  content: '[';
+  color: var(--link-hover-color);
+}
+.bracket-wrap::after {
+  content: ']';
+  color: var(--link-hover-color);
+}
+.separator::after {
+  content: ' //// ';
+  color: var(--link-hover-color);
+}
+
+/* Theme toggle */
+label[for='theme-toggle']:hover {
+  cursor: pointer;
+  color: var(--link-hover-color);
+}
+.theme-toggle-label::after {
+  content: var(--theme-toggle-label);
+}
+
+/* Highlighter */
+.highlight {
+  background-color: var(--link-color);
+  color: var(--background-color);
+  padding: 0.15em;
+  transition: background-color 300ms ease;
+}
+
+/* Themed links */
+a {
+  color: var(--link-color);
+  text-decoration-style: dashed;
+  text-underline-offset: 4px;
+}
+a:hover {
+  color: var(--link-hover-color);
+}

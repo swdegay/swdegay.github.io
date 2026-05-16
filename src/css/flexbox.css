@@ -1,0 +1,39 @@
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.gap-quarter {
+  gap: 0.25rem;
+}
+.gap-half {
+  gap: 0.5rem;
+}
+.gap-1 {
+  gap: 1rem;
+}
+
+/* Desktop breakpoint */
+@media (min-width: 768px) {
+  .flex-row-when-desktop {
+    flex-direction: row;
+  }
+}

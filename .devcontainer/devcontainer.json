@@ -1,0 +1,39 @@
+{
+  "name": "Deno Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/base:debian",
+  "remoteUser": "root",
+  "containerUser": "root",
+  "updateRemoteUserUID": false,
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "denoland.vscode-deno",
+        "bierner.markdown-mermaid",
+        "oscarotero.vento-syntax"
+      ],
+      "settings": {
+        "editor.tabSize": 2,
+        "deno.enable": true,
+        "deno.lint": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "denoland.vscode-deno"
+        },
+        "[html]": {
+          "editor.wordWrap": "on"
+        },
+        "json.schemaDownload.trustedDomains": {
+          "https://raw.githubusercontent.com/": true
+        },
+        "telemetry.telemetryLevel": "off",
+        "telemetry.feedback.enabled": false
+      }
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers-community/features/deno:1": {}
+  },
+  "mounts": [
+    "source=/etc/localtime,target=/etc/localtime,type=bind,readonly"
+  ],
+  "postCreateCommand": "deno cache scripts/build.ts"
+}

@@ -1,0 +1,19 @@
+<section>
+  <div class="fade-in">
+  {{ for line of bio.slice(0, -1) }}
+  <p>{{ line }}</p>
+  {{ /for }}
+  </div>
+  <p class="fade-in">{{ bio.at(-1) }}</p>
+
+  <ul class="flex flex-row gap-half bracket-wrap no-bullet fade-in" data-nosnippet>
+    {{ for link of links }}
+    <li class="flex-row-item"><a href="{{ link.url }}">{{ link.label }}</a></li>
+    {{ /for }}
+  </ul>
+  <div id="last-updated" class="small-text fade-in">
+    <p class="separator inline">Last updated</p>
+    <time class="separator inline local-date" datetime="{{ timestamp.full }}">{{ timestamp.short }}</time>
+    <a class="inline" href="https://github.com/swdegay/swdegay.github.io/commit/{{ seed.full }}">{{ seed.short }}</a>
+  </div>
+</section>
