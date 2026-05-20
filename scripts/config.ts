@@ -11,19 +11,20 @@ import readFile from '@/plugins/file-reader-plugin.ts';
 
 export const optimizeFavicon: Pipeline = {
   name: 'Optimized Favicon',
-  key: 'favicon',
   plugins: [
     readFile('./src/favicon.svg'),
     commitHashEnv,
     mangleCss,
     optimizeSvg,
   ],
+  postProcess(context: Context) {
+    return { value: '', store: { ...context.store, favicon: context.value } };
+  },
 };
 
 export function buildRaw(useDebug: boolean): Pipeline {
   return {
     name: 'Raw Build',
-    key: 'raw',
     plugins: [
       commitHashEnv,
       mergeData,
@@ -32,31 +33,13 @@ export function buildRaw(useDebug: boolean): Pipeline {
       mangleCss,
       writeFile('./dist/index.html'),
     ],
+    postProcess(context: Context) {
+      return { value: context.value, store: {} };
+    },
   };
 }
 
 export const optimizeRaw: Pipeline = {
   name: 'Optimized Build',
-  key: 'optimized',
   plugins: [minifyHtml, writeFile('./dist/index.min.html')],
 };
-
-/*
- * A pipeline must take an input and produce an output.
- * When input is not from a file, it has to be taken from
- * the result of the previous pipeline.
- */
-export function contextProvider(key: string, result: string): Context {
-  switch (key) {
-    case 'favicon':
-      return { value: '', store: { favicon: result } };
-    case 'raw':
-      return { value: result, store: {} };
-    case 'optimized':
-      return { value: '', store: {} };
-    case 'init':
-      return { value: '', store: {} };
-    default:
-      throw Error('unrecognized pipeline key');
-  }
-}

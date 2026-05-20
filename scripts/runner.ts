@@ -12,26 +12,24 @@ class PipelineRunner {
     this.pipelines.push(pipeline);
   }
 
-  public async run(
-    onContextRequest: (lastResult: Record<string, string>) => Context,
-  ) {
+  public async run() {
     if (this.pipelines.length === 0) {
       log.error('Error', 'No pipelines to run.');
       return;
     }
-    let lastResult: Record<string, string> = { init: '' };
+    let lastResult: Context = { value: '', store: {} };
     for (const pipeline of this.pipelines) {
-      const context = onContextRequest(lastResult);
-      const result = await this.runPipeline(pipeline, context);
-      const key = pipeline.key;
-      lastResult = { [key]: result };
+      const result = await this.runPipeline(pipeline, lastResult);
+      lastResult = pipeline.postProcess
+        ? pipeline.postProcess(result)
+        : { value: '', store: {} };
     }
   }
 
   private async runPipeline(
     pipeline: Pipeline,
     context: Context,
-  ): Promise<string> {
+  ): Promise<Context> {
     const start = performance.now();
     log.hint(`🚀 ${pipeline.name}`);
     let _context = context;
@@ -42,7 +40,7 @@ class PipelineRunner {
     const end = performance.now();
     const duration = (end - start).toFixed(2);
     log.hint(`⌚ Total duration ${duration}ms\n`);
-    return _context.value;
+    return _context;
   }
 }
 

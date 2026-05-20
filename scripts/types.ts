@@ -10,6 +10,6 @@ export interface Plugin {
 
 export interface Pipeline {
   readonly name: string;
-  readonly key: string;
   plugins: Plugin[];
+  postProcess?: (context: Context) => Context;
 }
