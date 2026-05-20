@@ -68,7 +68,23 @@ label[for='theme-toggle']:hover {
   color: var(--link-hover-color);
 }
 .theme-toggle-label::after {
-  content: var(--theme-toggle-label);
+  content: '';
+  display: inline-block;
+  height: 1.1rem;
+  width: 1.1rem;
+  background-color: var(--text-color);
+
+  -webkit-mask-image: var(--theme-toggle-label);
+  mask-image: var(--theme-toggle-label);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  vertical-align: middle;
+}
+.theme-toggle-label:hover::after {
+  background-color: var(--link-hover-color);
 }
 
 /* Highlighter */

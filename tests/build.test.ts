@@ -9,7 +9,7 @@ import { getTimestamp } from '@/utils/time.ts';
 Deno.test('should produce consistent builds with the same seed', async () => {
   const timestamp = Temporal.Instant.from('1970-01-01T00:00:00Z');
   const expected =
-    'fc658f24e68b3a9cbacd77764df6d19c4033181a139f66f07087ddc357993244';
+    '17f7c573df0302b2e0208fd10eba4d852d35082733fe6b155d465623ee21153e';
   const commitHash = '610dac2fabc687ae9ea6bb65e6cd89e55350c992';
   const lightModeIcon = optimizeSvgInternal(
     await Deno.readTextFile('./src/light_mode.svg'),
