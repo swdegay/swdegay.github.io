@@ -9,6 +9,34 @@ import createTimestamp from '@/plugins/timestamp-create-plugin.ts';
 import commitHashEnv from '@/plugins/commit-hash-plugin.ts';
 import readFile from '@/plugins/file-reader-plugin.ts';
 
+export const optimizeLightModeIcon: Pipeline = {
+  name: 'Optimized Light Mode Icon',
+  plugins: [
+    readFile('./src/light_mode.svg'),
+    optimizeSvg,
+  ],
+  postProcess(context: Context) {
+    return {
+      value: '',
+      store: { ...context.store, light_mode_icon: context.value },
+    };
+  },
+};
+
+export const optimizeDarkModeIcon: Pipeline = {
+  name: 'Optimized Dark Mode Icon',
+  plugins: [
+    readFile('./src/dark_mode.svg'),
+    optimizeSvg,
+  ],
+  postProcess(context: Context) {
+    return {
+      value: '',
+      store: { ...context.store, dark_mode_icon: context.value },
+    };
+  },
+};
+
 export const optimizeFavicon: Pipeline = {
   name: 'Optimized Favicon',
   plugins: [

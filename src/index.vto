@@ -15,7 +15,13 @@
     <style>
       {{ include "css/fadein.css" }}
       {{ include "css/flexbox.css" }}
+
+      :root {
+        --theme-toggle-label-light: url('{{ dark_mode_icon }}');
+        --theme-toggle-label-dark: url('{{ light_mode_icon }}');
+      }
       {{ include "css/theme.css" }}
+
       {{ include "css/main.css" }}
     </style>
   </head>
