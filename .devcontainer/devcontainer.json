@@ -1,9 +1,9 @@
 {
   "name": "Deno Dev Container",
   "image": "mcr.microsoft.com/devcontainers/base:debian",
-  "remoteUser": "root",
-  "containerUser": "root",
-  "updateRemoteUserUID": false,
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
+  "updateRemoteUserUID": true,
   "customizations": {
     "vscode": {
       "extensions": [
