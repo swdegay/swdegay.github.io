@@ -37,19 +37,6 @@ export const optimizeDarkModeIcon: Pipeline = {
   },
 };
 
-export const optimizeFavicon: Pipeline = {
-  name: 'Optimized Favicon',
-  plugins: [
-    readFile('./src/favicon.svg'),
-    commitHashEnv,
-    mangleCss,
-    optimizeSvg,
-  ],
-  postProcess(context: Context) {
-    return { value: '', store: { ...context.store, favicon: context.value } };
-  },
-};
-
 export function buildRaw(useDebug: boolean): Pipeline {
   return {
     name: 'Raw Build',
@@ -65,7 +52,15 @@ export function buildRaw(useDebug: boolean): Pipeline {
       return { value: context.value, store: {} };
     },
   };
-}
+};
+
+export const copyFavicon: Pipeline = {
+  name: 'Copy Favicon',
+  plugins: [
+    readFile('./src/favicon.svg'),
+    writeFile('./dist/favicon.svg')
+  ],
+};
 
 export const optimizeRaw: Pipeline = {
   name: 'Optimized Build',

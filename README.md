@@ -1,7 +1,7 @@
 # Deno SSG
 
 A lightweight, custom static site generator built with Deno. This pipeline
-compiles, minifies, and bundles Vento templates, CSS, JS, and SVG favicon into a
+compiles, minifies, and bundles Vento templates, CSS, and JS into a
 single, self-contained HTML file deployed automatically via GitHub Actions.
 
 [Live site](https://sethdegay.dev/) |
