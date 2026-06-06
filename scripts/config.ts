@@ -8,6 +8,7 @@ import mergeData from '@/plugins/data-merge-plugin.ts';
 import createTimestamp from '@/plugins/timestamp-create-plugin.ts';
 import commitHashEnv from '@/plugins/commit-hash-plugin.ts';
 import readFile from '@/plugins/file-reader-plugin.ts';
+import injectUmami from '@/plugins/umami-analytics-plugin.ts';
 
 export const optimizeLightModeIcon: Pipeline = {
   name: 'Optimized Light Mode Icon',
@@ -52,17 +53,17 @@ export function buildRaw(useDebug: boolean): Pipeline {
       return { value: context.value, store: {} };
     },
   };
-};
+}
 
 export const copyFavicon: Pipeline = {
   name: 'Copy Favicon',
   plugins: [
     readFile('./src/favicon.svg'),
-    writeFile('./dist/favicon.svg')
+    writeFile('./dist/favicon.svg'),
   ],
 };
 
 export const optimizeRaw: Pipeline = {
   name: 'Optimized Build',
-  plugins: [minifyHtml, writeFile('./dist/index.min.html')],
+  plugins: [minifyHtml, injectUmami, writeFile('./dist/index.min.html')],
 };
