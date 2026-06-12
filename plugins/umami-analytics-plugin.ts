@@ -1,12 +1,29 @@
 import { Context, Plugin } from '@/scripts/types.ts';
 
-export const umami =
-  `<script defer src=https://cloud.umami.is/script.js data-website-id=0fd09be0-0899-4a42-8730-0621b891fdd6></script>`;
+const UMAMI_SCRIPT_URL = 'https://cloud.umami.is/script.js';
+const BODY_TAG_REGEX = /<\/body>/i;
+
+export function injectUmamiScript(
+  html: string,
+  umamiWebsiteId: string,
+): string {
+  const umamiScript =
+    `<script defer src="${UMAMI_SCRIPT_URL}" data-website-id="${umamiWebsiteId}"></script>`;
+
+  if (BODY_TAG_REGEX.test(html)) {
+    return html.replace(BODY_TAG_REGEX, (match) => `${umamiScript}${match}`);
+  }
+
+  return `${html.trim()}${umamiScript}`;
+}
 
 const injectUmami: Plugin = {
   name: 'Umami Analytics',
   transform(context: Context) {
-    const updatedHtml = context.value + umami;
+    const updatedHtml = injectUmamiScript(
+      context.value,
+      context.store['umami_website_id'] as string,
+    );
     return {
       value: updatedHtml,
       store: context.store,

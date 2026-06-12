@@ -47,6 +47,7 @@ export function buildRaw(useDebug: boolean): Pipeline {
       createTimestamp(useDebug),
       renderTemplate,
       mangleCss,
+      injectUmami,
       writeFile('./dist/index.html'),
     ],
     postProcess(context: Context) {
@@ -65,5 +66,5 @@ export const copyFavicon: Pipeline = {
 
 export const optimizeRaw: Pipeline = {
   name: 'Optimized Build',
-  plugins: [minifyHtml, injectUmami, writeFile('./dist/index.min.html')],
+  plugins: [minifyHtml, writeFile('./dist/index.min.html')],
 };
