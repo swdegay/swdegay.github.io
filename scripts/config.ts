@@ -9,6 +9,7 @@ import createTimestamp from '@/plugins/timestamp-create-plugin.ts';
 import commitHashEnv from '@/plugins/commit-hash-plugin.ts';
 import readFile from '@/plugins/file-reader-plugin.ts';
 import injectUmami from '@/plugins/umami-analytics-plugin.ts';
+import { buildOutputPath } from '@/utils/env.ts';
 
 export const optimizeLightModeIcon: Pipeline = {
   name: 'Optimized Light Mode Icon',
@@ -48,7 +49,7 @@ export function buildRaw(useDebug: boolean): Pipeline {
       renderTemplate,
       mangleCss,
       injectUmami,
-      writeFile('./dist/index.html'),
+      writeFile(buildOutputPath('index.html')),
     ],
     postProcess(context: Context) {
       return { value: context.value, store: {} };
@@ -60,11 +61,11 @@ export const copyFavicon: Pipeline = {
   name: 'Copy Favicon',
   plugins: [
     readFile('./src/favicon.svg'),
-    writeFile('./dist/favicon.svg'),
+    writeFile(buildOutputPath('favicon.svg')),
   ],
 };
 
 export const optimizeRaw: Pipeline = {
   name: 'Optimized Build',
-  plugins: [minifyHtml, writeFile('./dist/index.min.html')],
+  plugins: [minifyHtml, writeFile(buildOutputPath('index.min.html'))],
 };

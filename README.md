@@ -18,9 +18,6 @@ self-contained HTML file deployed automatically via GitHub Actions.
 
 - Live Reload: Run `deno task dev` to start a local file server that watches for
   changes and rebuilds automatically.
-- Minified Build: Run `deno task build-dev` to generate a minified output
-  intended for inspection during development. This outputs a SHA-256 checksum;
-  if the build is correct, use this hash to update the build test configuration.
 - Validation: Run `deno task check` to execute linting, code formatting, and a
   full pipeline verification.
 

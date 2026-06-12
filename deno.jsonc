@@ -1,9 +1,8 @@
 {
   "tasks": {
     "build": "deno -P=build-permissions scripts/build.ts",
-    "build-dev": "deno task clean && COMMIT_HASH='610dac2fabc687ae9ea6bb65e6cd89e55350c992' GITHUB_ACTIONS='true' deno task build && sha256sum dist/index.min.html",
     "check": "deno fmt && deno lint && deno task test",
-    "clean": "rm -rf dist/",
+    "clean": "rm -rf dist/ .tmp/",
     "dev": "COMMIT_HASH=$(git rev-parse origin/main) deno --watch=src/,data/ -P=build-permissions scripts/build.ts & deno -P=dev-permissions serve-dev.ts",
     "ship": "git rev-parse --verify --quiet \"$COMMIT_HASH^{commit}\" && deno task build",
     "test": "deno test -P=test-permissions tests/"
@@ -33,7 +32,8 @@
     "build-permissions": {
       "env": [
         "COMMIT_HASH",
-        "GITHUB_ACTIONS"
+        "GITHUB_ACTIONS",
+        "OUTPUT_DIR"
       ],
       "read": {
         "allow": ["./data", "./dist", "./src"]
@@ -53,10 +53,18 @@
     },
     "test-permissions": {
       "read": {
-        "allow": ["./data", "./src"]
+        "allow": ["./data", "./src", "./.tmp"]
+      },
+      "write": {
+        "allow": ["./.tmp"]
       },
       "net": [
         "jsr.io:443" // https://jsr.io/@minify-html/deno/0.18.1/index.js#L149
+      ],
+      "env": [
+        "COMMIT_HASH",
+        "GITHUB_ACTIONS",
+        "OUTPUT_DIR"
       ]
     }
   }
