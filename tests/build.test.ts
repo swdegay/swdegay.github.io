@@ -34,8 +34,6 @@ Deno.test('should produce consistent builds with the same seed', async () => {
   const optimized = minifyHtmlInternal(
     injectUmamiScript(mangledHtml.processed, data.umami_website_id),
   );
-
-  console.log(optimized);
   const actual = getHashString(await hash(optimized));
   assertEquals(actual, expected);
   console.log('html', mangledHtml.classMap);
