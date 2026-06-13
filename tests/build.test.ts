@@ -8,66 +8,72 @@ import { getTimestamp } from '@/utils/time.ts';
 import { injectUmamiScript } from '@/plugins/umami-analytics-plugin.ts';
 import { join } from '@std/path/join';
 
-Deno.test('should produce consistent builds with the same seed', async () => {
-  // setup
-  const commitHash = '610dac2fabc687ae9ea6bb65e6cd89e55350c992';
-  const seed = {
-    full: commitHash,
-    short: commitHash.slice(0, 7),
-  };
+const COMMIT_HASH = '610dac2fabc687ae9ea6bb65e6cd89e55350c992';
+const TEMP_DIR = './.tmp';
+const FIXED_TIMESTAMP = Temporal.Instant.from('1970-01-01T00:00:00Z');
 
-  // raw assets
-  const rawLightIcon = await Deno.readTextFile('./src/light_mode.svg');
-  const rawDarkIcon = await Deno.readTextFile('./src/dark_mode.svg');
-  const userData = JSON.parse(await Deno.readTextFile('./data/userdata.json'));
+function makeSeed(commitHash: string) {
+  return { full: commitHash, short: commitHash.slice(0, 7) };
+}
 
-  // manual build pipeline
-  const lightModeIcon = optimizeSvgInternal(rawLightIcon);
-  const darkModeIcon = optimizeSvgInternal(rawDarkIcon);
+async function loadAssets() {
+  const [lightIcon, darkIcon, userDataRaw] = await Promise.all([
+    Deno.readTextFile('./src/light_mode.svg'),
+    Deno.readTextFile('./src/dark_mode.svg'),
+    Deno.readTextFile('./data/userdata.json'),
+  ]);
+  return { lightIcon, darkIcon, userData: JSON.parse(userDataRaw) };
+}
 
-  const timestamp = Temporal.Instant.from('1970-01-01T00:00:00Z');
-
-  const assembledHtml = await renderInternal({
-    ...userData,
+async function runBuildPipeline(
+  assets: Awaited<ReturnType<typeof loadAssets>>,
+  seed: ReturnType<typeof makeSeed>,
+): Promise<string> {
+  const assembled = await renderInternal({
+    ...assets.userData,
     seed,
-    timestamp: getTimestamp(timestamp),
-    light_mode_icon: lightModeIcon,
-    dark_mode_icon: darkModeIcon,
+    timestamp: getTimestamp(FIXED_TIMESTAMP),
+    light_mode_icon: optimizeSvgInternal(assets.lightIcon),
+    dark_mode_icon: optimizeSvgInternal(assets.darkIcon),
   });
 
-  const { processed: mangledHtml } = await mangleCssInternal(
-    assembledHtml,
-    seed.full,
-  );
+  const { processed: mangled } = await mangleCssInternal(assembled, seed.full);
   const withAnalytics = injectUmamiScript(
-    mangledHtml,
-    userData.umami_website_id,
+    mangled,
+    assets.userData.umami_website_id,
   );
-  const optimizedHtml = minifyHtmlInternal(withAnalytics);
+  return minifyHtmlInternal(withAnalytics);
+}
 
-  const testBuildHash = getHashString(await hash(optimizedHtml));
+async function computeHash(content: string): Promise<string> {
+  return getHashString(await hash(content));
+}
 
-  // actual build pipeline
-  Deno.env.set('COMMIT_HASH', commitHash);
+Deno.test('should produce consistent builds with the same seed', async () => {
+  const seed = makeSeed(COMMIT_HASH);
+  const assets = await loadAssets();
+
+  const expectedHtml = await runBuildPipeline(assets, seed);
+  const expectedHash = await computeHash(expectedHtml);
+
+  Deno.env.set('COMMIT_HASH', COMMIT_HASH);
   Deno.env.set('GITHUB_ACTIONS', 'true');
-
-  const tempDir = './.tmp';
-  Deno.env.set('OUTPUT_DIR', tempDir);
+  Deno.env.set('OUTPUT_DIR', TEMP_DIR);
 
   try {
     const { build } = await import('@/scripts/build.ts');
     await build();
 
-    const minifiedBuild = await Deno.readTextFile(
-      join(tempDir, 'index.min.html'),
+    const actualHtml = await Deno.readTextFile(
+      join(TEMP_DIR, 'index.min.html'),
     );
-    const actualBuildHash = getHashString(await hash(minifiedBuild));
+    const actualHash = await computeHash(actualHtml);
 
-    assertEquals(actualBuildHash, testBuildHash);
+    assertEquals(actualHash, expectedHash);
   } finally {
     Deno.env.delete('COMMIT_HASH');
     Deno.env.delete('GITHUB_ACTIONS');
     Deno.env.delete('OUTPUT_DIR');
-    Deno.remove(tempDir, { recursive: true });
+    await Deno.remove(TEMP_DIR, { recursive: true });
   }
 });
