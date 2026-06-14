@@ -46,7 +46,9 @@
       ]
     },
     "dev-permissions": {
-      "net": true,
+      "net": [
+        "127.0.0.1:8000"
+      ],
       "read": {
         "allow": ["./dist"]
       }
