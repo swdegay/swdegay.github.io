@@ -20,6 +20,7 @@
 }
 
 /* Dark theme */
+:root[data-theme='dark'],
 :has(#theme-toggle:checked) {
   --background-color: var(--background-dark);
   --text-color: var(--text-dark);
@@ -35,6 +36,7 @@
     --theme-toggle-label: var(--theme-toggle-label-dark);
   }
 
+  :root[data-theme='light'],
   :has(#theme-toggle:checked) {
     --background-color: var(--background-light);
     --text-color: var(--text-light);

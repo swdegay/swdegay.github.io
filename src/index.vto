@@ -15,6 +15,7 @@
 
     <link rel="icon" href="favicon.svg">
 
+    <script>{{ include "js/theme-preference-preload.js" }}</script>
     <style>
       {{ include "css/fadein.css" }}
       {{ include "css/flexbox.css" }}
@@ -35,8 +36,7 @@
       </main>
     </div>
     {{ include "templates/theme-toggle.vto" }}
-    <script>
-      {{ include "js/timestamp-formatter.js" }}
-    </script>
+    <script>{{ include "js/theme-preference.js" }}</script>
+    <script>{{ include "js/timestamp-formatter.js" }}</script>
   </body>
 </html>
