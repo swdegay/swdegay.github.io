@@ -10,6 +10,7 @@ import commitHashEnv from '@/plugins/commit-hash-plugin.ts';
 import readFile from '@/plugins/file-reader-plugin.ts';
 import injectUmami from '@/plugins/umami-analytics-plugin.ts';
 import { buildOutputPath } from '@/utils/env.ts';
+import bundleFont from '@/plugins/font-bundle-plugin.ts';
 
 export const optimizeLightModeIcon: Pipeline = {
   name: 'Optimized Light Mode Icon',
@@ -35,6 +36,19 @@ export const optimizeDarkModeIcon: Pipeline = {
     return {
       value: '',
       store: { ...context.store, dark_mode_icon: context.value },
+    };
+  },
+};
+
+export const bundleRobotoMonoFont: Pipeline = {
+  name: 'Bundle Roboto Mono Font',
+  plugins: [
+    bundleFont('./src/fonts/RobotoMono-Regular.ttf', 'RobotoMono'),
+  ],
+  postProcess(context: Context) {
+    return {
+      value: '',
+      store: { ...context.store, bundle_font_css: context.value },
     };
   },
 };

@@ -9,14 +9,14 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ url }}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
-
     <link rel="icon" href="favicon.svg">
 
     <script>{{ include "js/theme-preference-preload.js" }}</script>
     <style>
+      {{ if bundle_font_css }}
+      {{ bundle_font_css }}
+      {{ /if }}
+
       {{ include "css/fadein.css" }}
       {{ include "css/flexbox.css" }}
 
