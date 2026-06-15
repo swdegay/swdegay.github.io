@@ -20,7 +20,7 @@ function makeSeed(commitHash: string) {
 }
 
 async function loadAssets() {
-  const [lightIcon, darkIcon, userDataRaw, robotoRaw] = await Promise.all([
+  const [lightIcon, darkIcon, userDataRaw, roboFontRaw] = await Promise.all([
     Deno.readTextFile('./src/light_mode.svg'),
     Deno.readTextFile('./src/dark_mode.svg'),
     Deno.readTextFile('./data/userdata.json'),
@@ -30,7 +30,7 @@ async function loadAssets() {
     lightIcon,
     darkIcon,
     userData: JSON.parse(userDataRaw),
-    bundle_font_css: getFontCss(encodeBase64(robotoRaw), 'RobotoMono'),
+    bundle_font_css: getFontCss(encodeBase64(roboFontRaw), 'RoboSubset'),
   };
 }
 

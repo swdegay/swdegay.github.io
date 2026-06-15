@@ -11,50 +11,36 @@ function extractUniqueCharacters(rawHtml: string): string | null {
   const body = doc.querySelector('body');
   if (!body) return null;
 
-  const scripts = body.querySelectorAll('script');
-  for (const script of scripts) {
-    script.remove();
-  }
-  const cleanText = body.textContent;
+  body.querySelectorAll('script').forEach((e) => e.remove());
 
-  return Array.from(new Set(cleanText)).join('');
+  return [...new Set(body.textContent)].join('');
 }
 
-async function _subset(
+async function subsetToWoff2(
   charset: string,
-  // deno-lint-ignore no-explicit-any
-  nodeFontBuffer: Buffer<any>,
+  fontData: Uint8Array,
 ): Promise<string> {
-  const subsetBuffer = await subsetFont(nodeFontBuffer, charset, {
+  const subsetBuffer = await subsetFont(Buffer.from(fontData), charset, {
     targetFormat: 'woff2',
   });
-
-  const base64Font = encodeBase64(subsetBuffer);
-  return `data:font/woff2;base64,${base64Font}`;
+  return `data:font/woff2;base64,${encodeBase64(subsetBuffer)}`;
 }
 
 export async function subset(rawHtml: string): Promise<string> {
   const charset = extractUniqueCharacters(rawHtml);
-  const ttfMatch = TTF_REGEX.exec(rawHtml);
-  if (!charset || !ttfMatch) return rawHtml;
+  const match = TTF_REGEX.exec(rawHtml);
+  if (!charset || !match) return rawHtml;
 
-  const fullMatch = ttfMatch[0];
+  const [fullMatch, base64Content] = match;
+  const woff2Url = await subsetToWoff2(charset, decodeBase64(base64Content));
 
-  const base64Content = ttfMatch[1];
-  if (!base64Content) return rawHtml;
-  const decodedFont = decodeBase64(base64Content);
-  const nodeFontBuffer = Buffer.from(decodedFont);
-
-  const subset = await _subset(charset, nodeFontBuffer);
-
-  const newLine = `src: url('${subset}') format('woff2');`;
-  return rawHtml.replace(fullMatch, newLine);
+  return rawHtml.replace(fullMatch, `src: url('${woff2Url}') format('woff2');`);
 }
 
 const subsetFonts: Plugin = {
   name: 'Font Subset',
-  async transform(context: Context) {
-    return { value: await subset(context.value), store: context.store };
+  async transform({ value, store }: Context) {
+    return { value: await subset(value), store };
   },
 };
 export default subsetFonts;

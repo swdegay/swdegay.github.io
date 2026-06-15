@@ -41,10 +41,10 @@ export const optimizeDarkModeIcon: Pipeline = {
   },
 };
 
-export const bundleRobotoMonoFont: Pipeline = {
-  name: 'Bundle Roboto Mono Font',
+export const bundleRoboFont: Pipeline = {
+  name: 'Bundle Robo Font',
   plugins: [
-    bundleFont('./src/fonts/RobotoMono-Regular.ttf', 'RobotoMono'),
+    bundleFont('./src/fonts/RobotoMono-Regular.ttf', 'RoboSubset'),
   ],
   postProcess(context: Context) {
     return {

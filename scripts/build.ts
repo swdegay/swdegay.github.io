@@ -1,7 +1,7 @@
 import PipelineRunner from '@/scripts/runner.ts';
 import {
   buildRaw,
-  bundleRobotoMonoFont,
+  bundleRoboFont,
   copyFavicon,
   optimizeDarkModeIcon,
   optimizeLightModeIcon,
@@ -13,7 +13,7 @@ export async function build() {
   const runner = new PipelineRunner();
   runner.use(optimizeLightModeIcon);
   runner.use(optimizeDarkModeIcon);
-  runner.use(bundleRobotoMonoFont);
+  runner.use(bundleRoboFont);
   runner.use(buildRaw(useDebug));
   useOptimizations && runner.use(optimizeRaw);
   runner.use(copyFavicon);

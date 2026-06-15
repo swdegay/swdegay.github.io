@@ -5,7 +5,7 @@ export const useDebug =
 
 export const useOptimizations = Deno.env.get('GITHUB_ACTIONS') === 'true';
 
-const outputDir = Deno.env.get('OUTPUT_DIR') ?? './dist/';
+const outputDir = Deno.env.get('OUTPUT_DIR') || './dist/';
 
 export function buildOutputPath(fileName: string): string {
   return join(Deno.cwd(), outputDir, fileName);

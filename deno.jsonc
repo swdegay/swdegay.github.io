@@ -3,7 +3,7 @@
     "build": "deno -P=build-permissions scripts/build.ts",
     "check": "deno fmt && deno lint && deno task test",
     "clean": "rm -rf dist/ .tmp/",
-    "dev": "COMMIT_HASH=$(git rev-parse origin/main) deno --watch=src/,data/ -P=build-permissions scripts/build.ts & deno -P=dev-permissions serve-dev.ts",
+    "dev": "COMMIT_HASH=$(git rev-parse HEAD) deno --watch=src/,data/ -P=build-permissions scripts/build.ts & deno -P=dev-permissions serve-dev.ts",
     "ship": "git rev-parse --verify --quiet \"$COMMIT_HASH^{commit}\" && deno task build",
     "test": "deno test -P=test-permissions tests/"
   },

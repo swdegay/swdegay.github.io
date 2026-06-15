@@ -16,22 +16,22 @@ flowchart TD
 
     subgraph sg1["① Optimized Light Mode Icon"]
         direction LR
-        A1["readFile\n./src/light_mode.svg"] --> A2[optimizeSvg] --> A3[("postProcess\n→ store: light_mode_icon")]
+        A1["readFile\n./src/light_mode.svg"] --> A2[optimizeSvg] --> A3[/"postProcess\n→ store: light_mode_icon"/]
     end
 
     subgraph sg2["② Optimized Dark Mode Icon"]
         direction LR
-        B1["readFile\n./src/dark_mode.svg"] --> B2[optimizeSvg] --> B3[("postProcess\n→ store: dark_mode_icon")]
+        B1["readFile\n./src/dark_mode.svg"] --> B2[optimizeSvg] --> B3[/"postProcess\n→ store: dark_mode_icon"/]
     end
 
-    subgraph sg3["③ Bundle Roboto Mono Font"]
+    subgraph sg3["③ Bundle Font"]
         direction LR
-        C1["bundleFont\nRobotoMono-Regular.ttf"] --> C2[("postProcess\n→ store: bundle_font_css")]
+        C1["bundleFont\nRobotoMono-Regular.ttf"] --> C2[/"postProcess\n→ store: bundle_font_css"/]
     end
 
     subgraph sg4["④ Raw Build"]
         direction LR
-        D1[commitHashEnv] --> D2[mergeData] --> D3["createTimestamp\n(useDebug)"] --> D4[renderTemplate] --> D5[mangleCss] --> D6[injectUmami] --> D7["writeFile\nindex.html"]
+        D1[commitHashEnv] --> D2[mergeData] --> D3["createTimestamp"] --> D4[renderTemplate] --> D5[mangleCss] --> D6[injectUmami] --> D7["writeFile\nindex.html"]
     end
 
     subgraph sg5["⑤ Optimized Build"]
@@ -59,14 +59,14 @@ flowchart TD
 
 ### Tasks Breakdown
 
-| Task       | Command                                                                                                                                         | Description                                                                                                                 |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `build`    | `deno -P=build-permissions scripts/build.ts`                                                                                                    | Builds the project. Relevant environment variables should be provided.                                                      |
-| `⭐ check` | `deno fmt && deno lint && deno task test`                                                                                                       | Executes linting, code formatting, and a full pipeline verification.                                                        |
-| `clean`    | `rm -rf dist/ .tmp/`                                                                                                                            | Cleans up the workspace by deleting build artifacts and temporary files.                                                    |
-| `⭐ dev`   | `COMMIT_HASH=$(git rev-parse origin/main) deno --watch=src/,data/ -P=build-permissions scripts/build.ts & deno -P=dev-permissions serve-dev.ts` | Starts a local development server and automatically rebuilds when changes are made.                                         |
-| `ship`     | `git rev-parse --verify --quiet "$COMMIT_HASH^{commit}" && deno task build`                                                                     | Verifies that a valid Git commit hash exists before triggering the `build` task for deployment. This is intended for CI/CD. |
-| `test`     | `deno test -P=test-permissions tests/`                                                                                                          | Runs the test suite in the `tests/` directory with test permissions.                                                        |
+| Task       | Command                                                                                                                                  | Description                                                                                                                 |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `build`    | `deno -P=build-permissions scripts/build.ts`                                                                                             | Builds the project. Relevant environment variables should be provided.                                                      |
+| `⭐ check` | `deno fmt && deno lint && deno task test`                                                                                                | Executes linting, code formatting, and a full pipeline verification.                                                        |
+| `clean`    | `rm -rf dist/ .tmp/`                                                                                                                     | Cleans up the workspace by deleting build artifacts and temporary files.                                                    |
+| `⭐ dev`   | `COMMIT_HASH=$(git rev-parse HEAD) deno --watch=src/,data/ -P=build-permissions scripts/build.ts & deno -P=dev-permissions serve-dev.ts` | Starts a local development server and automatically rebuilds when changes are made.                                         |
+| `ship`     | `git rev-parse --verify --quiet "$COMMIT_HASH^{commit}" && deno task build`                                                              | Verifies that a valid Git commit hash exists before triggering the `build` task for deployment. This is intended for CI/CD. |
+| `test`     | `deno test -P=test-permissions tests/`                                                                                                   | Runs the test suite in the `tests/` directory with test permissions.                                                        |
 
 ### Environment Variables
 
