@@ -4,6 +4,9 @@
   "remoteUser": "vscode",
   "containerUser": "vscode",
   "updateRemoteUserUID": true,
+  "containerEnv": {
+    "DENO_DIR": "${containerWorkspaceFolder}/.cache"
+  },
   "customizations": {
     "vscode": {
       "extensions": [

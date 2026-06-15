@@ -19,6 +19,7 @@
   },
   "imports": {
     "@/": "./",
+    "@b-fuze/deno-dom": "jsr:@b-fuze/deno-dom@^0.1.56",
     "@minify-html/deno": "jsr:@minify-html/deno@^0.18.1",
     "@std/assert": "jsr:@std/assert@^1.0.19",
     "@std/encoding": "jsr:@std/encoding@^1.0.10",
@@ -26,6 +27,7 @@
     "@std/http": "jsr:@std/http@^1.1.1",
     "@std/path": "jsr:@std/path@^1.1.5",
     "@std/random": "jsr:@std/random@^0.1.5",
+    "subset-font": "npm:subset-font@^2.5.0",
     "svgo": "npm:svgo@^4.0.1",
     "vento": "https://cdn.jsdelivr.net/gh/ventojs/vento@2.2.0/mod.ts"
   },
@@ -37,7 +39,7 @@
         "OUTPUT_DIR"
       ],
       "read": {
-        "allow": ["./data", "./dist", "./src"]
+        "allow": ["./.cache", "./data", "./dist", "./src"]
       },
       "write": {
         "allow": ["./dist"]
@@ -56,7 +58,7 @@
     },
     "test-permissions": {
       "read": {
-        "allow": ["./data", "./src", "./.tmp"]
+        "allow": ["./.cache", "./data", "./src", "./.tmp"]
       },
       "write": {
         "allow": ["./.tmp"]

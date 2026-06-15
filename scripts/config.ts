@@ -11,6 +11,7 @@ import readFile from '@/plugins/file-reader-plugin.ts';
 import injectUmami from '@/plugins/umami-analytics-plugin.ts';
 import { buildOutputPath } from '@/utils/env.ts';
 import bundleFont from '@/plugins/font-bundle-plugin.ts';
+import subsetFonts from '@/plugins/font-subset-plugin.ts';
 
 export const optimizeLightModeIcon: Pipeline = {
   name: 'Optimized Light Mode Icon',
@@ -81,5 +82,9 @@ export const copyFavicon: Pipeline = {
 
 export const optimizeRaw: Pipeline = {
   name: 'Optimized Build',
-  plugins: [minifyHtml, writeFile(buildOutputPath('index.min.html'))],
+  plugins: [
+    subsetFonts,
+    minifyHtml,
+    writeFile(buildOutputPath('index.min.html')),
+  ],
 };

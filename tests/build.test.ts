@@ -9,6 +9,7 @@ import { injectUmamiScript } from '@/plugins/umami-analytics-plugin.ts';
 import { join } from '@std/path/join';
 import { encodeBase64 } from '@std/encoding/base64';
 import { getFontCss } from '@/plugins/font-bundle-plugin.ts';
+import { subset } from '@/plugins/font-subset-plugin.ts';
 
 const COMMIT_HASH = '610dac2fabc687ae9ea6bb65e6cd89e55350c992';
 const TEMP_DIR = './.tmp';
@@ -51,7 +52,8 @@ async function runBuildPipeline(
     mangled,
     assets.userData.umami_website_id,
   );
-  return minifyHtmlInternal(withAnalytics);
+  const subsetted = await subset(withAnalytics);
+  return minifyHtmlInternal(subsetted);
 }
 
 async function computeHash(content: string): Promise<string> {
@@ -79,10 +81,13 @@ Deno.test('should produce consistent builds with the same seed', async () => {
     const actualHash = await computeHash(actualHtml);
 
     assertEquals(actualHash, expectedHash);
+    try {
+      await Deno.remove(TEMP_DIR, { recursive: true });
+      // deno-lint-ignore no-empty
+    } catch {}
   } finally {
     Deno.env.delete('COMMIT_HASH');
     Deno.env.delete('GITHUB_ACTIONS');
     Deno.env.delete('OUTPUT_DIR');
-    await Deno.remove(TEMP_DIR, { recursive: true });
   }
 });
