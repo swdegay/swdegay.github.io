@@ -42,7 +42,7 @@ jobs:
           deno task ship
           bash generate-report.sh "$COMMIT_HASH"
           mv -f dist/index.min.html dist/index.html
-          cp CNAME .nojekyll dist/
+          cp CNAME .nojekyll CREDITS.txt dist/
 
       - name: Upload static files
         id: deployment

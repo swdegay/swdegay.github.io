@@ -1,8 +1,9 @@
 # Deno SSG
 
 A lightweight, custom static site generator built with Deno. This pipeline
-compiles, minifies, and bundles Vento templates, Fonts, CSS, and JS into a
-single, self-contained HTML file deployed automatically via GitHub Actions.
+compiles, minifies, and bundles Vento templates, Fonts, CSS, JS, and SVG assets
+into a single, self-contained HTML file deployed automatically via GitHub
+Actions.
 
 [Live site](https://sethdegay.dev/) |
 [Optimization report](https://sethdegay.dev/optimization-report.txt)
@@ -97,6 +98,7 @@ flowchart TD
 | **`deno.lock`**          | The lockfile ensuring strict module version locking and security across environments.  |
 | **`generate-report.sh`** | A standalone shell script, used to generate optimization reports.                      |
 | **`CNAME`**              | A configuration file used by GitHub Pages to map a custom domain to the deployed site. |
+| **`CREDITS.txt`**        | Third-party notices and licenses.                                                      |
 
 ### User Data Configuration
 
@@ -119,7 +121,7 @@ base64 -w 0 data/userdata.json
 - Name: `USER_DATA`
 - Value: [Paste the Base64 output here]
 
-For implementation details, review the deployment logic in the
+For implementation details, review the build job in the
 [workflow](.github/workflows/main.yml) file.
 
 ## Benchmark Target
