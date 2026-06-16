@@ -1,12 +1,10 @@
-# Deno SSG
-
-A lightweight, custom static site generator built with Deno. This pipeline
-compiles, minifies, and bundles Vento templates, Fonts, CSS, JS, and SVG assets
-into a single, self-contained HTML file deployed automatically via GitHub
+This pipeline compiles and optimizes Vento templates, fonts, CSS, JS, and SVG
+assets into a single, self-contained HTML file deployed automatically via GitHub
 Actions.
 
 [Live site](https://sethdegay.dev/) |
-[Optimization report](https://sethdegay.dev/optimization-report.txt)
+[Optimization report](https://sethdegay.dev/optimization-report.txt) |
+[Credits](https://sethdegay.dev/CREDITS.txt)
 
 ## Overview
 
@@ -89,7 +87,7 @@ flowchart TD
 | **`data/`**    | Local data files (like `userdata.json`) that feed content into templates during the build process.                                                                     |
 | **`dist/`**    | The production-ready output directory containing the compiled, minified, and optimized assets (`OUTPUT_DIR`).                                                          |
 
-### Key Root Files
+### Root Files
 
 | File                     | Purpose                                                                                |
 | ------------------------ | -------------------------------------------------------------------------------------- |
