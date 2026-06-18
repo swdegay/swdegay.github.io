@@ -30,17 +30,17 @@ flowchart TD
 
     subgraph sg4["④ Raw Build"]
         direction LR
-        D1[commitHashEnv] --> D2[mergeData] --> D3["createTimestamp"] --> D4[renderTemplate] --> D5[mangleCss] --> D6[injectUmami] --> D7["writeFile\nindex.html"]
+        D1[commitHashEnv] --> D2[mergeData] --> D3["createTimestamp"] --> D4[renderTemplate] --> D5["writeFile\nindex.html"] --> D6[/"postProcess\n→ store: umami_website_id, seed"/]
     end
 
     subgraph sg5["⑤ Optimized Build"]
         direction LR
-        E1[subsetFonts] --> E2[minifyHtml] --> E3["writeFile\nindex.min.html"]
+        E1[mangleCss] --> E2[subsetFonts] --> E3[injectUmami] --> E4[minifyHtml] --> E5["writeFile\nindex.min.html"]
     end
 
     subgraph sg6["⑥ Copy Favicon"]
         direction LR
-        F1["readFile\n./src/favicon.svg"] --> F2["writeFile\nfavicon.svg"]
+        F1["readFile\n./src/favicon.svg"] --> F2["writeFile\n./dist/favicon.svg"]
     end
 
     sg1 --> sg2 --> sg3 --> sg4 --> Cond{useOptimizations?}

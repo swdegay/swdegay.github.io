@@ -85,6 +85,9 @@ Deno.test('should produce consistent builds with the same seed', async () => {
       await Deno.remove(TEMP_DIR, { recursive: true });
       // deno-lint-ignore no-empty
     } catch {}
+  } catch (e) {
+    await Deno.writeTextFile(join(TEMP_DIR, 'index.exp.html'), expectedHtml);
+    throw e;
   } finally {
     Deno.env.delete('COMMIT_HASH');
     Deno.env.delete('GITHUB_ACTIONS');

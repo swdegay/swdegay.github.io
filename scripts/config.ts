@@ -62,12 +62,16 @@ export function buildRaw(useDebug: boolean): Pipeline {
       mergeData,
       createTimestamp(useDebug),
       renderTemplate,
-      mangleCss,
-      injectUmami,
       writeFile(buildOutputPath('index.html')),
     ],
-    postProcess(context: Context) {
-      return { value: context.value, store: {} };
+    postProcess({ value, store }: Context) {
+      return {
+        value: value,
+        store: {
+          umami_website_id: store.umami_website_id,
+          seed: store.seed,
+        },
+      };
     },
   };
 }
@@ -83,7 +87,9 @@ export const copyFavicon: Pipeline = {
 export const optimizeRaw: Pipeline = {
   name: 'Optimized Build',
   plugins: [
+    mangleCss,
     subsetFonts,
+    injectUmami,
     minifyHtml,
     writeFile(buildOutputPath('index.min.html')),
   ],
